@@ -1,0 +1,1 @@
+https://lombardo-chcg.github.io/tools/2017/11/24/kafka-connect-in-action,-part-2.html
