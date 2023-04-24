@@ -18,8 +18,8 @@ VALUES (1, 'John', 'Wick', 100100100),
 --
 create table public.client
 (
-    clientId     uuid DEFAULT gen_random_uuid() not null PRIMARY KEY,
-    id           int not null,
+    client_id     uuid DEFAULT gen_random_uuid() not null PRIMARY KEY,
+    id           int,
     firstname    text,
     lastname     text,
     phone_number int
