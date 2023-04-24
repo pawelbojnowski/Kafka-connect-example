@@ -4,7 +4,7 @@ import org.apache.kafka.streams.processor.api.Processor;
 import org.apache.kafka.streams.processor.api.ProcessorContext;
 import org.apache.kafka.streams.processor.api.Record;
 import org.apache.kafka.streams.state.KeyValueStore;
-import pl.pb.kafkaconnectexample.config.Commons;
+import pl.pb.kafkaconnectexample.config2.Commons;
 
 public class WordCountProcessor implements Processor<String, String, String, String> {
 
