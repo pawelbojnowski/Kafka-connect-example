@@ -1,49 +1,10 @@
 #!/bin/bash
 
-
-#remove existing docker images
-ids=$(docker ps -aqf name=kce_.)
-for id in $(echo $ids | tr "\n" " "); do
-  docker stop  $id
-  docker container rm -f $id
-done
-
-#remove existing docker volumes
-rm -rf ./volumes
-
-#create docker
-docker-compose up --build -d --remove-orphans
-
-
-while [[ $(curl -s -H "Content-Type: application/json" -XGET 'http://localhost:8083/connectors') != "[]" ]];
-do
-  printf "."
-  sleep 1
-done
-sleep 3
-echo "\n----------------------------------------------------"
-echo "Create connectors:\n"
-
-curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
-   "name":"postgres.connector.source",
-   "config":{
-      "topic.prefix":"postgres.connector.source."
-      "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
-      "tasks.max":"1",
-      "connection.url":"jdbc:postgresql://kce_postgres:5432/postgres",
-      "connection.user":"postgres",
-      "connection.password":"postgres",
-      "mode":"incrementing",
-      "incrementing.column.name":"id",
-   }
-}
-'  | json_pp
-
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
 -d '{
-      "name": "postgres.connector.sink.user",
+      "name": "postgres.connector.sink.user11",
       "config": {
-        "topics": "postgres.connector.sink.user",
+        "topics": "postgres.connector.sink.user11",
 
         "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
         "tasks.max": "1",
@@ -62,14 +23,15 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "key.converter.schemas.enable": "false",
         "value.converter.schemas.enable": "true",
-        "fields.whitelist":"id,firstname,lastname,phone_number"
+        "fields.whitelist":"id,firstname,lastname,phone_number",
+        "kafkastore.init.timeout.ms":1000
       }
     }'  | json_pp
 
 
 
 
-sleep 2
+sleep 5
 
 echo "\n----------------------------------------------------"
 echo "List connectors:\n"

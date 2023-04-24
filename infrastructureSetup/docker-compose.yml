@@ -9,10 +9,13 @@ services:
     hostname: kce_zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+    volumes:
+      - ./volumes/zookeeper/data:/var/lib/zookeeper/data
+      - ./volumes/zookeeper/log:/var/lib/zookeeper/log
 
   kce_kafka:
     container_name: kce_kafka
-    image: confluentinc/cp-kafka:3.2.1
+    image: confluentinc/cp-kafka:7.3.3
     hostname: kce_kafka
     ports:
       - "9092:29092"
@@ -28,6 +31,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://localhost:9091,PLAINTEXT://kce_kafka:9092"
       KAFKA_ZOOKEEPER_CONNECT: kce_zookeeper:2181
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - ./volumes/broker/data:/var/lib/kafka/data
 
   kce_schema_registry:
     container_name: kce_schema_registry
@@ -76,7 +81,7 @@ services:
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
     volumes:
-      - ./data:/tmp/data
+      - ./volumes/data:/tmp/data
 
   kce_kafka_rest:
     image: confluentinc/cp-kafka-rest:3.2.1
@@ -102,7 +107,8 @@ services:
 
 
   kce_postgres:
-    image: lombardo/postgres-scrabble-helper:latest
+    image: postgres:10.4
+    restart: always
     container_name: kce_postgres
     ports:
       - "5431:5432"
@@ -111,10 +117,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - ./db:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
-
-
-
+      - ./init.sql:/docker-entrypoint-initdb.d/db.sql
+      - ./volumes/postgres-data:/var/lib/postgresql/data
 
 
