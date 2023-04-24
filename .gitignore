@@ -10,7 +10,7 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 /kafka/
-/kafka/
 /target/
 /.idea/
 /kafka_docker/
+/infrastructureSetup/
