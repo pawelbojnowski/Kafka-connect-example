@@ -27,23 +27,23 @@ echo "Create connectors:\n"
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
    "name":"postgres.connector.source",
    "config":{
-      "topic.prefix":"postgres.connector.source."
+      "topic.prefix":"postgres.connector.source.",
       "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
       "tasks.max":"1",
       "connection.url":"jdbc:postgresql://kce_postgres:5432/postgres",
       "connection.user":"postgres",
       "connection.password":"postgres",
       "mode":"incrementing",
-      "incrementing.column.name":"id",
+      "incrementing.column.name":"id"
    }
 }
 '  | json_pp
 
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
 -d '{
-      "name": "postgres.connector.sink.user",
+      "name": "postgres.connector.sink.client",
       "config": {
-        "topics": "postgres.connector.sink.user",
+        "topics": "postgres.connector.sink.client",
 
         "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
         "tasks.max": "1",
@@ -52,7 +52,7 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "connection.password": "postgres",
         "connection.ds.pool.size": 5,
         "insert.mode.databaselevel": true,
-        "table.name.format": "user",
+        "table.name.format": "client",
         "auto.create": "false",
         "auto.evolve": "true",
         "insert.mode": "insert",

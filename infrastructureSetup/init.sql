@@ -1,9 +1,10 @@
+CREATE EXTENSION pgcrypto WITH SCHEMA public;
 create schema if not exists public;
 -- use public;
 
 create table public.user
 (
-    id           int primary key,
+    id           int not null primary key,
     firstname    text,
     lastname     text,
     phone_number int
@@ -17,8 +18,8 @@ VALUES (1, 'John', 'Wick', 100100100),
 --
 create table public.client
 (
-    id           int primary key,
-    clientId           int primary key,
+    clientId     uuid DEFAULT gen_random_uuid() not null PRIMARY KEY,
+    id           int not null,
     firstname    text,
     lastname     text,
     phone_number int
