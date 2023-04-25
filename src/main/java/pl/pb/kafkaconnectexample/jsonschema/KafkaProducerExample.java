@@ -1,11 +1,11 @@
-package pl.pb.kafkaconnectexample.emitrate;
+package pl.pb.kafkaconnectexample.jsonschema;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.config.KafkaConfig.POSTGRES_SINK_CLIENT;
-import static pl.pb.kafkaconnectexample.config.KafkaConfig.getProducer;
+import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.POSTGRES_SINK_CLIENT;
+import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.getProducer;
 
 public class KafkaProducerExample {
 

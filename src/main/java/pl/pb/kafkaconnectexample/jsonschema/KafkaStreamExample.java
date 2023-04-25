@@ -1,14 +1,13 @@
-package pl.pb.kafkaconnectexample.emitrate;
+package pl.pb.kafkaconnectexample.jsonschema;
 
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
-import pl.pb.kafkaconnectexample.config.KafkaConfig;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.config.KafkaConfig.POSTGRES_SOURCED_USER;
-import static pl.pb.kafkaconnectexample.config.KafkaConfig.runStreams;
+import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.runStreams;
 
 public class KafkaStreamExample {
 
