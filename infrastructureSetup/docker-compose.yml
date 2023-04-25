@@ -36,7 +36,7 @@ services:
 
   kce_schema_registry:
     container_name: kce_schema_registry
-    image: confluentinc/cp-schema-registry:3.2.1
+    image: confluentinc/cp-schema-registry:7.3.3
     ports:
       - "8081:8081"
     links:
@@ -46,12 +46,16 @@ services:
       - kce_zookeeper
       - kce_kafka
     environment:
-      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: kce_zookeeper:2181
-      SCHEMA_REGISTRY_HOST_NAME: kce_schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: "kce_zookeeper:2181"
+      SCHEMA_REGISTRY_HOST_NAME: "kce_schema_registry"
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: "kce_kafka:9092"
+      SCHEMA_REGISTRY_LISTENERS: "http://localhost:8081"
+      SCHEMA_REGISTRY_DEBUG: "true"
 
   kce_kafka_connect:
+    build: ./
     container_name: kce_kafka_connect
-    image: confluentinc/cp-kafka-connect:3.2.1
+    image: confluentinc/cp-kafka-connect_with_plugin:7.3.3
     ports:
       - "8083:8083"
     links:
@@ -73,6 +77,9 @@ services:
       CONNECT_CONFIG_STORAGE_TOPIC: "kc-config"
       CONNECT_OFFSET_STORAGE_TOPIC: "kc-offset"
       CONNECT_STATUS_STORAGE_TOPIC: "kc-status"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       # convertors
       CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
@@ -80,11 +87,12 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+
     volumes:
       - ./volumes/data:/tmp/data
 
   kce_kafka_rest:
-    image: confluentinc/cp-kafka-rest:3.2.1
+    image: confluentinc/cp-kafka-rest:7.3.3
     hostname: kce_kafka_rest
     container_name: kce_kafka_rest
     links:
@@ -100,11 +108,10 @@ services:
       - 8082:8082
     environment:
       KAFKA_REST_HOST_NAME: kce_kafka_rest
-      KAFKA_REST_BOOTSTRAP_SERVERS: 'kce_kafka:29092'
-      KAFKA_REST_ZOOKEEPER_CONNECT: 'kce_zookeeper:2181'
+      KAFKA_REST_BOOTSTRAP_SERVERS: "kce_kafka:9092"
+      KAFKA_REST_ZOOKEEPER_CONNECT: "kce_zookeeper:2181"
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
-      KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://kce_schema_registry:8081'
-
+      KAFKA_REST_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
 
   kce_postgres:
     image: postgres:10.4

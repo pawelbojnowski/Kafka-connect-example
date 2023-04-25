@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.emitrate;
+package pl.pb.kafkaconnectexample.jsonschema;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
@@ -6,8 +6,8 @@ import java.time.Duration;
 import java.util.List;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.config.KafkaConfig.POSTGRES_SOURCED_USER;
-import static pl.pb.kafkaconnectexample.config.KafkaConfig.getConsumer;
+import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.getConsumer;
 
 public class KafkaConsumerExample {
 

@@ -40,31 +40,31 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
 }
 '  | json_pp
 
-curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
--d '{
-      "name": "postgres.connector.sink.client",
-      "config": {
-        "topics": "postgres.connector.sink.client",
-        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-        "tasks.max": "1",
-        "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
-        "connection.user": "postgres",
-        "connection.password": "postgres",
-        "connection.ds.pool.size": 5,
-        "insert.mode.databaselevel": true,
-        "table.name.format": "client",
-        "auto.create": "false",
-        "auto.evolve": "true",
-        "insert.mode": "insert",
-        "delete.enabled": "true",
-        "schemas.enable": "false",
-        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-        "key.converter.schemas.enable": "false",
-        "value.converter.schemas.enable": "true",
-        "fields.whitelist":"id,firstname,lastname,phone_number"
-      }
-    }'  | json_pp
+#curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
+#-d '{
+#      "name": "postgres.connector.sink.client",
+#      "config": {
+#        "topics": "postgres.connector.sink.client",
+#        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+#        "tasks.max": "1",
+#        "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+#        "connection.user": "postgres",
+#        "connection.password": "postgres",
+#        "connection.ds.pool.size": 5,
+#        "insert.mode.databaselevel": true,
+#        "table.name.format": "client",
+#        "auto.create": "false",
+#        "auto.evolve": "true",
+#        "insert.mode": "insert",
+#        "delete.enabled": "true",
+#        "schemas.enable": "false",
+#        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+#        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+#        "key.converter.schemas.enable": "false",
+#        "value.converter.schemas.enable": "true",
+#        "fields.whitelist":"id,firstname,lastname,phone_number"
+#      }
+#    }'  | json_pp
 
 
 
@@ -78,7 +78,7 @@ curl -s -H "Content-Type: application/json" -XGET 'http://localhost:8083/connect
 
 echo "\n----------------------------------------------------"
 echo "List topic:\n"
-curl -s -H "Content-Type: application/json" -XGET 'http://localhost:8082/topics' | json_pp
+curl -s -H "Content-Type: application/vnd.kafka.v2+json" -XGET 'http://localhost:8082/topics' | json_pp
 
 
 
