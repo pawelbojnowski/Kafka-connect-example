@@ -33,9 +33,7 @@ public class KafkaProtoConfigProperties {
 		properties.setProperty(StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG, "1");
 		properties.setProperty(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
 		properties.setProperty("enable.auto.commit", "false");
-
 		properties.setProperty("specific.protobuf.value.type", User.class.getName());
-
 		return properties;
 	}
 
