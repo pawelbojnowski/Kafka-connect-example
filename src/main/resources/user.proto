@@ -18,5 +18,5 @@ message User {
   int32 id = 1;
   string firstname = 2;
   string lastname = 3;
-  string phone_number = 4;
+  int32 phone_number = 4;
 }

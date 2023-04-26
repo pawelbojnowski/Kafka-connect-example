@@ -14,3 +14,7 @@ buildNumber.properties
 /.idea/
 /kafka_docker/
 /infrastructureSetup/
+/infrastructureSetup/volumes/
+/target/
+/kafka-connect-example.iml
+/.idea/

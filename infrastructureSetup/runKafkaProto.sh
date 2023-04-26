@@ -12,7 +12,7 @@ done
 rm -rf ./volumes
 
 #create docker
-docker-compose up --build -d --remove-orphans
+docker-compose -f docker-compose-proto.yml up --build -d --remove-orphans
 
 
 while [[ $(curl -s -H "Content-Type: application/json" -XGET 'http://localhost:8083/connectors') != "[]" ]];
@@ -57,10 +57,8 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "auto.create": "false",
         "auto.evolve": "true",
         "insert.mode": "insert",
-        "delete.enabled": "true",
+        "delete.enabled": "false",
         "schemas.enable": "false",
-        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
-        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "key.converter.schemas.enable": "false",
         "value.converter.schemas.enable": "true",
         "fields.whitelist":"id,firstname,lastname,phone_number"

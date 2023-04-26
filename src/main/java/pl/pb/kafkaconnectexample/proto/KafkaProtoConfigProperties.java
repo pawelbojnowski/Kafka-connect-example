@@ -1,17 +1,19 @@
 package pl.pb.kafkaconnectexample.proto;
 
+import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
+import io.confluent.kafka.streams.serdes.protobuf.KafkaProtobufSerde;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.streams.StreamsConfig;
+import pl.pb.kafkamodel.user.User;
 
 import java.util.Properties;
 import java.util.UUID;
 
 public class KafkaProtoConfigProperties {
 
-	private static final String URL = "localhost:9091";
+	public static final String URL = "localhost:9091";
 	public static final String APPLICATION_ID = "streams-example";
 	public static final String GROUP_ID = "example-consumer-group-id";
 	public static final String AUTO_OFFSET_RESET = "earliest";
@@ -21,13 +23,19 @@ public class KafkaProtoConfigProperties {
 	}
 
 	public static Properties getStreamsConfig() {
+
 		final Properties properties = new Properties();
 		properties.setProperty(StreamsConfig.APPLICATION_ID_CONFIG, APPLICATION_ID);
 		properties.setProperty(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, URL);
 		properties.setProperty(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, "0");
-		properties.setProperty(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-		properties.setProperty(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
+		properties.setProperty(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.ByteArray().getClass().getName());
+		properties.setProperty(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, KafkaProtobufSerde.class.getName());
 		properties.setProperty(StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG, "1");
+		properties.setProperty(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
+		properties.setProperty("enable.auto.commit", "false");
+
+		properties.setProperty("specific.protobuf.value.type", User.class.getName());
+
 		return properties;
 	}
 

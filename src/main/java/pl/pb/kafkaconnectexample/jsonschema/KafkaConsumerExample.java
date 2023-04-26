@@ -3,6 +3,7 @@ package pl.pb.kafkaconnectexample.jsonschema;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
@@ -17,7 +18,7 @@ public class KafkaConsumerExample {
 		final KafkaConsumer<String, Long> consumer = getConsumer();
 
 		// add subscribed topic(s)
-		consumer.subscribe(List.of(POSTGRES_SOURCED_USER));
+		consumer.subscribe(Arrays.asList(POSTGRES_SOURCED_USER));
 
 		// consume data
 		while (true) {
