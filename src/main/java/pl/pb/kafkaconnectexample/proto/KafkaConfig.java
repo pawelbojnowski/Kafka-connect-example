@@ -4,6 +4,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.Topology;
+import pl.pb.kafkamodel.user.Client;
 import pl.pb.kafkamodel.user.User;
 
 import java.util.concurrent.CountDownLatch;
@@ -28,7 +29,7 @@ public class KafkaConfig {
 	}
 
 	public static KafkaProducer getProducer() {
-		return new KafkaProducer<String, Object>(getProducerConfig());
+		return new KafkaProducer<String, Client>(getProducerConfig());
 	}
 
 

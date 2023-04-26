@@ -1,11 +1,10 @@
 package pl.pb.kafkaconnectexample.proto;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import pl.pb.kafkamodel.user.User;
 
 import java.time.Duration;
-import java.util.List;
+import java.util.Arrays;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
 import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_SOURCED_USER;
@@ -19,7 +18,7 @@ public class KafkaConsumerExample {
 		final KafkaConsumer<String, User> consumer = getConsumer();
 
 		// add subscribed topic(s)
-		consumer.subscribe(List.of(POSTGRES_SOURCED_USER));
+		consumer.subscribe(Arrays.asList(POSTGRES_SOURCED_USER));
 
 		// consume data
 		while (true) {

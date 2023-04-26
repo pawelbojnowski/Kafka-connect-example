@@ -1,6 +1,5 @@
 package pl.pb.kafkaconnectexample.proto;
 
-import io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import pl.pb.kafkamodel.user.Client;
@@ -17,9 +16,9 @@ public class KafkaProducerExample {
 	public static void main(final String[] args) {
 //		KafkaProtobufSerializer
 		// create the producer
-		final KafkaProducer<String, Object> producer = getProducer();
+		final KafkaProducer<String, Client> producer = getProducer();
 
-		final	Client client = Client.newBuilder()
+		final Client client = Client.newBuilder()
 				.setClientId(UUID.randomUUID().toString())
 				.setId(10)
 				.setFirstname("Tom")
@@ -37,7 +36,7 @@ public class KafkaProducerExample {
 		producer.close();
 	}
 
-	private static void send(final String inputTopic, final KafkaProducer<String, Object> producer, final String key, final Object value) {
+	private static void send(final String inputTopic, final KafkaProducer producer, final String key, final Object value) {
 
 		// create a producer record
 		final ProducerRecord<String, Object> producerRecord = new ProducerRecord<>(inputTopic, key, value);
