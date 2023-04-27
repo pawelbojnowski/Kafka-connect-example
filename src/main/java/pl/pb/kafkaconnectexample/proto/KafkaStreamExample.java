@@ -6,19 +6,17 @@ import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
-import pl.pb.kafkaconnectexample.jsonschema.KafkaConfig;
 import pl.pb.kafkamodel.user.Client;
 import pl.pb.kafkamodel.user.User;
 
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 
 import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
 import static io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializerConfig.SPECIFIC_PROTOBUF_VALUE_TYPE;
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.POSTGRES_SOURCED_USER;
-import static pl.pb.kafkaconnectexample.jsonschema.KafkaConfig.runStreams;
+import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.proto.KafkaConfig.runStreams;
 
 public class KafkaStreamExample {
 

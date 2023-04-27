@@ -14,6 +14,8 @@ import static pl.pb.kafkaconnectexample.proto.KafkaProtoConfigProperties.*;
 public class KafkaConfig {
 
 	public static final String POSTGRES_SOURCED_USER = "postgres.connector.source.user";
+	public static final String POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP = "postgres.connector.source.user.query.timestamp";
+	public static final String POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING = "postgres.connector.source.user.query.incrementing";
 	public static final String POSTGRES_SINK_CLIENT = "postgres.connector.sink.client";
 
 	private KafkaConfig() {

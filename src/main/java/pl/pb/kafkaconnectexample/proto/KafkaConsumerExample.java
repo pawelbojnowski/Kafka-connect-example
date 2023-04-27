@@ -23,10 +23,10 @@ public class KafkaConsumerExample {
 		// consume data
 		while (true) {
 			consumer.poll(Duration.ofMillis(100))
-					.forEach(consumerRecord -> println("Topic: %s,\n Key: %s,\n Value: %-10s,\n Partition: %s,\n Offset: %s\n",
+					.forEach(consumerRecord -> println("Topic: %s, Key: %s, Value: %-10s, Partition: %s, Offset: %s",
 							consumerRecord.topic(),
 							consumerRecord.key(),
-							consumerRecord.value(),
+							consumerRecord.value().getId(),
 							consumerRecord.partition(),
 							consumerRecord.offset()
 					));

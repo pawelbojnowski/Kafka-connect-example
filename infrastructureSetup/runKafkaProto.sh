@@ -40,6 +40,41 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
 }
 '  | json_pp
 
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
+            "name": "postgres.connector.source.user.query.timestamp",
+            "config": {
+              "topic.prefix": "postgres.connector.source.user.query.timestamp",
+              "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+              "tasks.max": "1",
+              "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+              "connection.user": "postgres",
+              "connection.password": "postgres",
+              "mode": "timestamp",
+              "query": "SELECT u.* FROM public.user u WHERE u.id > 1",
+              "validate.non.null": "false"
+            }
+          }
+'  | json_pp
+
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
+            "name": "postgres.connector.source.user.query.incrementing",
+            "config": {
+              "topic.prefix": "postgres.connector.source.user.query.incrementing",
+              "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+              "tasks.max": "1",
+              "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+              "connection.user": "postgres",
+              "connection.password": "postgres",
+              "mode": "incrementing",
+              "query": "Select t.* From (SELECT u.* FROM public.user u WHERE u.id > 1) t",
+              "incrementing.column.name": "id",
+              "validate.non.null": "false"
+            }
+          }
+'  | json_pp
+
+
+
 
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
 -d '{
