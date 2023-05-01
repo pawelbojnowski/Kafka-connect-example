@@ -114,7 +114,7 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
 
   kce_postgres:
-    image: postgres:10.4
+    image: postgres:latest
     restart: always
     container_name: kce_postgres
     ports:
@@ -123,6 +123,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+      - POSTGRES_INITDB_ARGS="--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/db.sql
       - ./volumes/postgres-data:/var/lib/postgresql/data

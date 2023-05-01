@@ -4,16 +4,16 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.Topology;
-import pl.pb.kafkamodel.user.Client;
-import pl.pb.kafkamodel.user.User;
 
 import java.util.concurrent.CountDownLatch;
 
-import static pl.pb.kafkaconnectexample.proto.KafkaProtoConfigProperties.*;
+import static pl.pb.kafkaconnectexample.proto.KafkaConfigProperties.*;
 
 public class KafkaConfig {
 
 	public static final String POSTGRES_SOURCED_USER = "postgres.connector.source.user";
+	public static final String POSTGRES_SINK_USER_INSERT = "postgres.connector.sink.user.insert";
+	public static final String POSTGRES_SINK_USER_UPDATE = "postgres.connector.sink.user.update";
 	public static final String POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP = "postgres.connector.source.user.query.timestamp";
 	public static final String POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING = "postgres.connector.source.user.query.incrementing";
 	public static final String POSTGRES_SINK_CLIENT = "postgres.connector.sink.client";
@@ -26,12 +26,12 @@ public class KafkaConfig {
 		closeKafkaStreams(kafkaStreams);
 	}
 
-	public static KafkaConsumer getConsumer() {
-		return new KafkaConsumer<String, User>(getConsumerConfig());
+	public static <K, V> KafkaConsumer getConsumer() {
+		return new KafkaConsumer<K, V>(getConsumerConfig());
 	}
 
-	public static KafkaProducer getProducer() {
-		return new KafkaProducer<String, Client>(getProducerConfig());
+	public static <K, V> KafkaProducer getProducer() {
+		return new KafkaProducer<K, V>(getProducerConfig());
 	}
 
 

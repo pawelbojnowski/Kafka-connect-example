@@ -73,8 +73,29 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
           }
 '  | json_pp
 
-
-
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
+-d '{
+      "name": "postgres.connector.sink.user.insert",
+      "config": {
+        "topics": "postgres.connector.sink.user.insert",
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+        "connection.user": "postgres",
+        "connection.password": "postgres",
+        "connection.ds.pool.size": 5,
+        "insert.mode.databaselevel": true,
+        "table.name.format": "user",
+        "auto.create": "false",
+        "auto.evolve": "true",
+        "insert.mode": "insert",
+        "delete.enabled": "false",
+        "schemas.enable": "false",
+        "key.converter.schemas.enable": "false",
+        "value.converter.schemas.enable": "true",
+        "fields.whitelist":"id,firstname,lastname,phone_number"
+      }
+    }'  | json_pp
 
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
 -d '{
@@ -100,8 +121,33 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
       }
     }'  | json_pp
 
-
-
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
+-d '{
+      "name": "postgres.connector.sink.user.update",
+      "config": {
+        "topics": "postgres.connector.sink.user.update",
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+        "connection.user": "postgres",
+        "connection.password": "postgres",
+        "connection.ds.pool.size": 5,
+        "insert.mode.databaselevel": true,
+        "table.name.format": "user",
+        "auto.create": "false",
+        "auto.evolve": "true",
+        "insert.mode": "upsert",
+        "delete.enabled": "false",
+        "schemas.enable": "false",
+        "insert.mode": "upsert",
+        "delete.enabled": "false",
+        "pk.fields":"id",
+        "pk.mode": "record_value",
+        "key.converter.schemas.enable": "false",
+        "value.converter.schemas.enable": "true",
+        "fields.whitelist":"id,firstname,lastname,phone_number"
+      }
+    }'  | json_pp
 
 sleep 2
 

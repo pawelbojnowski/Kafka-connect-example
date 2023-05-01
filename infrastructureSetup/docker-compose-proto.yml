@@ -114,7 +114,7 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
 
   kce_postgres:
-    image: postgres:10.4
+    image: postgres:latest
     restart: always
     container_name: kce_postgres
     ports:

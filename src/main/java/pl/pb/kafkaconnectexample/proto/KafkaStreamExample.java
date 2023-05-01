@@ -7,7 +7,7 @@ import org.apache.kafka.streams.kstream.Consumed;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
 import pl.pb.kafkamodel.user.Client;
-import pl.pb.kafkamodel.user.User;
+import  pl.pb.kafkamodel.user.User;
 
 import java.util.HashMap;
 import java.util.Map;

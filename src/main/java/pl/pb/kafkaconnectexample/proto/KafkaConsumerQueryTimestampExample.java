@@ -1,5 +1,6 @@
 package pl.pb.kafkaconnectexample.proto;
 
+import com.google.protobuf.DynamicMessage;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import pl.pb.kafkamodel.user.User;
 
@@ -7,9 +8,9 @@ import java.time.Duration;
 import java.util.Arrays;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP;
 
-public class KafkaConsumerExample {
+public class KafkaConsumerQueryTimestampExample {
 
 	public static void main(final String[] args) {
 
@@ -17,7 +18,7 @@ public class KafkaConsumerExample {
 		final KafkaConsumer<String, User> consumer = KafkaConfig.<String, User>getConsumer();
 
 		// add subscribed topic(s)
-		consumer.subscribe(Arrays.asList(POSTGRES_SOURCED_USER));
+		consumer.subscribe(Arrays.asList(POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP));
 
 		// consume data
 		while (true) {

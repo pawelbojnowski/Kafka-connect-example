@@ -4,7 +4,7 @@ create schema if not exists public;
 
 create table public.user
 (
-    id           int not null primary key,
+    id           int not null primary key ,
     firstname    text,
     lastname     text,
     phone_number int
