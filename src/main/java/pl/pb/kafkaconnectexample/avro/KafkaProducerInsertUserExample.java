@@ -1,11 +1,11 @@
-package pl.pb.kafkaconnectexample.proto;
+package pl.pb.kafkaconnectexample.avro;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import pl.pb.kafkamodel.proto.User;
+import pl.pb.kafkamodel.avro.User;
 
+import static pl.pb.kafkaconnectexample.avro.KafkaConfig.POSTGRES_SINK_USER_INSERT;
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_SINK_USER_INSERT;
 
 public class KafkaProducerInsertUserExample {
 
@@ -28,10 +28,10 @@ public class KafkaProducerInsertUserExample {
 		producer.close();
 	}
 
-	private static void send(final String inputTopic, final KafkaProducer producer, final Integer key, final User value) {
+	private static void send(final String inputTopic, final KafkaProducer producer, final String key, final User value) {
 
 		// create a producer record
-		final ProducerRecord<Integer, User> producerRecord = new ProducerRecord<>(inputTopic, key, value);
+		final ProducerRecord<String, User> producerRecord = new ProducerRecord<>(inputTopic, key, value);
 
 		// send data - asynchronous
 		producer.send(producerRecord);

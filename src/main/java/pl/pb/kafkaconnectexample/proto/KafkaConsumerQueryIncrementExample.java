@@ -1,15 +1,13 @@
 package pl.pb.kafkaconnectexample.proto;
 
-import com.google.protobuf.DynamicMessage;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import pl.pb.kafkamodel.user.User;
+import pl.pb.kafkamodel.proto.User;
 
 import java.time.Duration;
 import java.util.Arrays;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
 import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING;
-import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_SOURCED_USER;
 
 public class KafkaConsumerQueryIncrementExample {
 

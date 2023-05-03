@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package pl.pb.kafkamodel.user;
+package pl.pb.kafkamodel.proto;
 
 option java_multiple_files = true;
-option java_package = "pl.pb.kafkamodel.user";
+option java_package = "pl.pb.kafkamodel.proto";
 option java_outer_classname = "UserProtos";
 
 message Client {
-  string client_id = 1;
+  string clientId = 1;
   int32 id = 2;
   string firstname = 3;
   string lastname = 4;

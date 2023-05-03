@@ -2,7 +2,7 @@ package pl.pb.kafkaconnectexample.proto;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import pl.pb.kafkamodel.user.User;
+import pl.pb.kafkamodel.proto.User;
 
 import static pl.pb.kafkaconnectexample.config.Commons.println;
 import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_SINK_USER_UPDATE;

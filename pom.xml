@@ -67,6 +67,22 @@
             <artifactId>kafka-streams-protobuf-serde</artifactId>
             <version>7.3.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.confluent/kafka-avro-serializer -->
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+            <version>7.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-streams-avro-serde</artifactId>
+            <version>7.3.3</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>common-config</artifactId>
+            <version>7.3.3</version>
+        </dependency>
 
 
         <!--    TEST    -->
@@ -82,32 +98,14 @@
             <version>5.4.0</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.11.1</version>
+        </dependency>
     </dependencies>
 
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>com.github.os72</groupId>-->
-<!--                <artifactId>protoc-jar-maven-plugin</artifactId>-->
-<!--                <version>3.1.0.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>generate-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>run</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <protocVersion>3.1.0</protocVersion>-->
-<!--                            <inputDirectories>-->
-<!--                                <include>src/main/resources</include>-->
-<!--                            </inputDirectories>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
+
     <build>
         <extensions>
             <extension>
@@ -117,6 +115,7 @@
             </extension>
         </extensions>
         <plugins>
+            <!--  PROTOBUF PLUGIN -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -139,7 +138,7 @@
                         io.grpc:protoc-gen-grpc-java:1.22.1:exe:${os.detected.classifier}
                     </pluginArtifact>
                     <protoSourceRoot>
-                        src/main/resources
+                        src/main/schema/proto
                     </protoSourceRoot>
                 </configuration>
                 <executions>
@@ -151,6 +150,34 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--  AVRO PLUGIN -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro-maven-plugin</artifactId>
+                <version>1.10.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>schema</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${project.basedir}/src/main/schema/avro</sourceDirectory>
+                            <outputDirectory>${project.basedir}/target/generated-sources/avro/java/</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>

@@ -9,7 +9,7 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.streams.StreamsConfig;
-import pl.pb.kafkamodel.user.User;
+import pl.pb.kafkamodel.proto.User;
 
 import java.util.Properties;
 import java.util.UUID;
@@ -39,7 +39,7 @@ public class KafkaConfigProperties {
 		properties.setProperty(StreamsConfig.NUM_STANDBY_REPLICAS_CONFIG, "1");
 		properties.setProperty(SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
 		properties.setProperty("enable.auto.commit", "false");
-		properties.setProperty("specific.protobuf.value.type", User.class.getName());
+		properties.setProperty(SPECIFIC_PROTOBUF_VALUE_TYPE, User.class.getName());
 		return properties;
 	}
 

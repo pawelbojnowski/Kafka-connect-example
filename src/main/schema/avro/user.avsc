@@ -1,0 +1,23 @@
+{
+  "type": "record",
+  "namespace": "pl.pb.kafkamodel.avro",
+  "name": "User",
+  "fields": [
+    {
+      "name": "id",
+      "type": "int"
+    },
+    {
+      "name": "firstname",
+      "type": "string"
+    },
+    {
+      "name": "lastname",
+      "type": "string"
+    },
+    {
+      "name": "phone_number",
+      "type": "int"
+    }
+  ]
+}

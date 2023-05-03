@@ -1,15 +1,15 @@
-package pl.pb.kafkaconnectexample.proto;
+package pl.pb.kafkaconnectexample.avro;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import pl.pb.kafkamodel.proto.User;
+import pl.pb.kafkamodel.avro.User;
 
 import java.time.Duration;
 import java.util.Arrays;
 
+import static pl.pb.kafkaconnectexample.avro.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING;
 import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP;
 
-public class KafkaConsumerQueryTimestampExample {
+public class KafkaConsumerQueryIncrementExample {
 
 	public static void main(final String[] args) {
 
@@ -17,7 +17,7 @@ public class KafkaConsumerQueryTimestampExample {
 		final KafkaConsumer<String, User> consumer = KafkaConfig.<String, User>getConsumer();
 
 		// add subscribed topic(s)
-		consumer.subscribe(Arrays.asList(POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP));
+		consumer.subscribe(Arrays.asList(POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING));
 
 		// consume data
 		while (true) {

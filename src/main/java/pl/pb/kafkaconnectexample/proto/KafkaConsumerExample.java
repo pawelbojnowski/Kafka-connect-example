@@ -1,7 +1,7 @@
 package pl.pb.kafkaconnectexample.proto;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import pl.pb.kafkamodel.user.User;
+import pl.pb.kafkamodel.proto.User;
 
 import java.time.Duration;
 import java.util.Arrays;
