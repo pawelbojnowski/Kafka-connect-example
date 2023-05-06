@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.proto;
+package pl.pb.kafkaconnectexample.postgress.proto;
 
 import io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer;
 import io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer;

@@ -1,13 +1,13 @@
-package pl.pb.kafkaconnectexample.proto;
+package pl.pb.kafkaconnectexample.postgress.avro;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import pl.pb.kafkamodel.proto.User;
+import pl.pb.kafkamodel.avro.User;
 
 import java.time.Duration;
 import java.util.Arrays;
 
-import static pl.pb.kafkaconnectexample.config.Commons.println;
-import static pl.pb.kafkaconnectexample.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING;
+import static pl.pb.kafkaconnectexample.postgress.avro.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING;
+import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
 
 public class KafkaConsumerQueryIncrementExample {
 

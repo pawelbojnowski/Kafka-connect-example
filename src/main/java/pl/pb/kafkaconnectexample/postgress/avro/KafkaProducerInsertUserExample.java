@@ -1,11 +1,11 @@
-package pl.pb.kafkaconnectexample.avro;
+package pl.pb.kafkaconnectexample.postgress.avro;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import pl.pb.kafkamodel.avro.User;
 
-import static pl.pb.kafkaconnectexample.avro.KafkaConfig.POSTGRES_SINK_USER_INSERT;
-import static pl.pb.kafkaconnectexample.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgress.avro.KafkaConfig.POSTGRES_SINK_USER_INSERT;
+import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
 
 public class KafkaProducerInsertUserExample {
 
