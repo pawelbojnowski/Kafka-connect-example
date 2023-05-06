@@ -37,7 +37,7 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
       "table.whitelist" : "user",
       "incrementing.column.name":"id",
       "validate.non.null": "false",
-      "value.converter" : "class io.confluent.connect.avro.AvroConverter",
+
       "transforms":"SetSchemaName",
       "transforms.SetSchemaName.type":"org.apache.kafka.connect.transforms.SetSchemaMetadata$Value",
       "transforms.SetSchemaName.schema.name":"pl.pb.kafkamodel.avro.User"
