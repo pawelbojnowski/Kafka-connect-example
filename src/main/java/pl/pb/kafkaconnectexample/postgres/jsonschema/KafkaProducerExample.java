@@ -1,11 +1,11 @@
-package pl.pb.kafkaconnectexample.postgress.jsonschema;
+package pl.pb.kafkaconnectexample.postgres.jsonschema;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
-import static pl.pb.kafkaconnectexample.postgress.jsonschema.KafkaConfig.POSTGRES_SINK_CLIENT;
-import static pl.pb.kafkaconnectexample.postgress.jsonschema.KafkaConfig.getProducer;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.jsonschema.KafkaConfig.POSTGRES_SINK_CLIENT;
+import static pl.pb.kafkaconnectexample.postgres.jsonschema.KafkaConfig.getProducer;
 
 public class KafkaProducerExample {
 

@@ -1,13 +1,13 @@
-package pl.pb.kafkaconnectexample.postgress.jsonschema;
+package pl.pb.kafkaconnectexample.postgres.jsonschema;
 
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.Produced;
 
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
-import static pl.pb.kafkaconnectexample.postgress.jsonschema.KafkaConfig.POSTGRES_SOURCED_USER;
-import static pl.pb.kafkaconnectexample.postgress.jsonschema.KafkaConfig.runStreams;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.jsonschema.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.postgres.jsonschema.KafkaConfig.runStreams;
 
 public class KafkaStreamExample {
 

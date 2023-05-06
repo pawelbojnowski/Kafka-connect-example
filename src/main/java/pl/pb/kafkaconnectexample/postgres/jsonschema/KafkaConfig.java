@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.jsonschema;
+package pl.pb.kafkaconnectexample.postgres.jsonschema;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -7,7 +7,7 @@ import org.apache.kafka.streams.Topology;
 
 import java.util.concurrent.CountDownLatch;
 
-import static pl.pb.kafkaconnectexample.postgress.jsonschema.KafkaConfigProperties.*;
+import static pl.pb.kafkaconnectexample.postgres.jsonschema.KafkaConfigProperties.*;
 
 public class KafkaConfig {
 

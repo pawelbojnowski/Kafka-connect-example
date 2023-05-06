@@ -1,24 +1,24 @@
-package pl.pb.kafkaconnectexample.postgress.proto;
+package pl.pb.kafkaconnectexample.postgres.proto;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import pl.pb.kafkamodel.proto.User;
 
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
-import static pl.pb.kafkaconnectexample.postgress.proto.KafkaConfig.POSTGRES_SINK_USER_UPDATE;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.proto.KafkaConfig.POSTGRES_SINK_USER_INSERT;
 
-public class KafkaProducerUpdateUserExample {
+public class KafkaProducerInsertUserExample {
 
 
 	public static void main(final String[] args) {
 
 		// create the producer
 		final KafkaProducer<Integer, User> producer = KafkaConfig.<Integer, User>getProducer();
-		send(POSTGRES_SINK_USER_UPDATE, producer, null, User.newBuilder()
-				.setId(3)
-				.setFirstname("Brian")
-				.setLastname("O’Conner")
-				.setPhoneNumber(333333333)
+		send(POSTGRES_SINK_USER_INSERT, producer, null, User.newBuilder()
+				.setId(4)
+				.setFirstname("Harry")
+				.setLastname("Potter")
+				.setPhoneNumber(400400400)
 				.build());
 
 		// flush data - synchronous

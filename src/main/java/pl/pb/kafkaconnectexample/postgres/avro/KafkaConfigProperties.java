@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.avro;
+package pl.pb.kafkaconnectexample.postgres.avro;
 
 import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;

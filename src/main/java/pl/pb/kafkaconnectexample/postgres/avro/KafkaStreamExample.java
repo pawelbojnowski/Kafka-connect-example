@@ -1,13 +1,13 @@
-package pl.pb.kafkaconnectexample.postgress.avro;
+package pl.pb.kafkaconnectexample.postgres.avro;
 
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.kstream.KStream;
 import pl.pb.kafkamodel.avro.Client;
 import pl.pb.kafkamodel.avro.User;
 
-import static pl.pb.kafkaconnectexample.postgress.avro.KafkaConfig.POSTGRES_SOURCED_USER;
-import static pl.pb.kafkaconnectexample.postgress.avro.KafkaConfig.runStreams;
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.avro.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.postgres.avro.KafkaConfig.runStreams;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
 
 public class KafkaStreamExample {
 

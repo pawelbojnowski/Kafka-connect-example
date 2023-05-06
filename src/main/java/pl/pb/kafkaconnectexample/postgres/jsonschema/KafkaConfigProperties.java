@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.jsonschema;
+package pl.pb.kafkaconnectexample.postgres.jsonschema;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;

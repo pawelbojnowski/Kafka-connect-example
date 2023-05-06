@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.proto;
+package pl.pb.kafkaconnectexample.postgres.proto;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import pl.pb.kafkamodel.proto.User;
@@ -6,10 +6,10 @@ import pl.pb.kafkamodel.proto.User;
 import java.time.Duration;
 import java.util.Arrays;
 
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
-import static pl.pb.kafkaconnectexample.postgress.proto.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING;
 
-public class KafkaConsumerExample {
+public class KafkaConsumerQueryIncrementExample {
 
 	public static void main(final String[] args) {
 
@@ -17,7 +17,7 @@ public class KafkaConsumerExample {
 		final KafkaConsumer<String, User> consumer = KafkaConfig.<String, User>getConsumer();
 
 		// add subscribed topic(s)
-		consumer.subscribe(Arrays.asList(POSTGRES_SOURCED_USER));
+		consumer.subscribe(Arrays.asList(POSTGRES_CONNECTOR_SOURCE_USER_QUERY_INCREMENTING));
 
 		// consume data
 		while (true) {

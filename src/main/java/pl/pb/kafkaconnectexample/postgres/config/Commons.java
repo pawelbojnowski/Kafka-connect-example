@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.config;
+package pl.pb.kafkaconnectexample.postgres.config;
 
 public class Commons {
 

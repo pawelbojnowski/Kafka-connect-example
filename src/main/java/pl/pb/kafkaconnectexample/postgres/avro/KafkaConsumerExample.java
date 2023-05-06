@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.avro;
+package pl.pb.kafkaconnectexample.postgres.avro;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import pl.pb.kafkamodel.avro.User;
@@ -6,8 +6,8 @@ import pl.pb.kafkamodel.avro.User;
 import java.time.Duration;
 import java.util.Arrays;
 
-import static pl.pb.kafkaconnectexample.postgress.avro.KafkaConfig.POSTGRES_SOURCED_USER;
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.avro.KafkaConfig.POSTGRES_SOURCED_USER;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
 
 public class KafkaConsumerExample {
 

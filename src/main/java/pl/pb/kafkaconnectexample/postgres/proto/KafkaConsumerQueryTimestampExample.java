@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.postgress.proto;
+package pl.pb.kafkaconnectexample.postgres.proto;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import pl.pb.kafkamodel.proto.User;
@@ -6,8 +6,8 @@ import pl.pb.kafkamodel.proto.User;
 import java.time.Duration;
 import java.util.Arrays;
 
-import static pl.pb.kafkaconnectexample.postgress.config.Commons.println;
-import static pl.pb.kafkaconnectexample.postgress.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP;
+import static pl.pb.kafkaconnectexample.postgres.config.Commons.println;
+import static pl.pb.kafkaconnectexample.postgres.proto.KafkaConfig.POSTGRES_CONNECTOR_SOURCE_USER_QUERY_TIMESTAMP;
 
 public class KafkaConsumerQueryTimestampExample {
 
