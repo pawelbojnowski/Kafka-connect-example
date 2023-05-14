@@ -14,7 +14,7 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/db.sql
-      - ./volumesData/postgres-data:/var/lib/postgresql/data
+      - ../volumes/data/postgres-data:/var/lib/postgresql/data
 
   kce_cassandra:
     image: cassandra:latest
@@ -28,7 +28,7 @@ services:
       - "CASSANDRA_PASSWORD=root"
     restart: always
     volumes:
-      - ./volumesData/cassandra_data:/var/lib/cassandra
+      - ../volumes/data/cassandra_data:/var/lib/cassandra
     healthcheck:
       test: [ "CMD", "cqlsh", "-u root", "-p root" ,"-e describe keyspaces" ]
       interval: 10s
@@ -62,8 +62,8 @@ services:
       ZOOKEEPER_CLIENT_PORT: 2181
       KAFKA_JMX_PORT: "9998"
     volumes:
-      - ./volumes/zookeeper/data:/var/lib/zookeeper/data
-      - ./volumes/zookeeper/log:/var/lib/zookeeper/log
+      - ../volumes/kce/zookeeper/data:/var/lib/zookeeper/data
+      - ../volumes/kce/zookeeper/log:/var/lib/zookeeper/log
 
   kce_kafka:
     container_name: kce_kafka
@@ -95,7 +95,7 @@ services:
       KAFKA_JMX_HOSTNAME: "kce_kafka"
       KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kce_kafka -Dcom.sun.management.jmxremote.rmi.port=9997"
     volumes:
-      - ./volumes/broker/data:/var/lib/kafka/data
+      - ../volumes/kce/broker/data:/var/lib/kafka/data
 
   kce_schema_registry:
     container_name: kce_schema_registry
@@ -163,7 +163,7 @@ services:
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
 
     volumes:
-      - ./volumes/data:/tmp/data
+      - ../volumes/kce/kafka/data:/tmp/data
 
   kce_kafka_rest:
     image: confluentinc/cp-kafka-rest:7.3.3

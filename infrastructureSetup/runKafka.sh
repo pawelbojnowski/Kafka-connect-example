@@ -9,8 +9,7 @@ for id in $(echo $ids | tr "\n" " "); do
 done
 
 #remove existing docker volumes
-rm -rf ./volumes
-rm -rf ./volumesData
+rm -rf ../volumes
 
 #create docker
 docker-compose up --build -d --remove-orphans
