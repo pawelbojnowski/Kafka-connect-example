@@ -1,4 +1,4 @@
-package pl.pb.kafkaconnectexample.cassandra.jsonschema;
+package pl.pb.kafkaconnectexample.cassandra.json;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -6,8 +6,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import java.util.UUID;
 
 import static pl.pb.kafkaconnectexample.cassandra.config.Commons.println;
-import static pl.pb.kafkaconnectexample.cassandra.jsonschema.KafkaConfig.CASSANDRA_SINK_CLIENT;
-import static pl.pb.kafkaconnectexample.cassandra.jsonschema.KafkaConfig.getProducer;
+import static pl.pb.kafkaconnectexample.cassandra.json.KafkaConfig.CASSANDRA_SINK_CLIENT;
+import static pl.pb.kafkaconnectexample.cassandra.json.KafkaConfig.getProducer;
 
 public class KafkaProducerExample {
 
@@ -17,7 +17,12 @@ public class KafkaProducerExample {
 		// create the producer
 		final KafkaProducer<String, String> producer = getProducer();
 
-		send("basic_topic", producer, UUID.randomUUID().toString(), "sdasd");
+		send(CASSANDRA_SINK_CLIENT, producer, UUID.randomUUID().toString(), "{\n" +
+																			"  \"id\": 1,\n" +
+																			"  \"firstname\": \"Jack\",\n" +
+																			"  \"lastname\": \"Sparrow\",\n" +
+																			"  \"phone_number\": 200200200\n" +
+																			"}");
 
 		// flush data - synchronous
 		producer.flush();
