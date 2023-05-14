@@ -14,7 +14,7 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/db.sql
-      - ./volumes/postgres-data:/var/lib/postgresql/data
+      - ./volumesData/postgres-data:/var/lib/postgresql/data
 
   kce_cassandra:
     image: cassandra:latest
@@ -138,7 +138,6 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
-
     volumes:
       - ./volumes/data:/tmp/data
 
