@@ -39,10 +39,11 @@ services:
     container_name: kce_cassandra_init
     image: cassandra:latest
     depends_on:
-      - kce_cassandra
+      kce_cassandra:
+        condition: service_healthy
     volumes:
       - ./init.cql:/init.cql
-    command: /bin/bash -c "echo loading kce_cassandra keyspace && cqlsh kce_cassandra -f /init.cql"
+    command: /bin/bash -c "echo loading kce_cassandra keyspace && cqlsh kce_cassandra -f ./init.cql"
 
   kce_zookeeper:
     container_name: kce_zookeeper
@@ -161,8 +162,9 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-
+      CONNECT_PLUGIN_PATH: "/etc/kafka-connect/jars"
     volumes:
+      - ./vol-kafka-connect-jar:/etc/kafka-connect/jars
       - ../volumes/kce/kafka/data:/tmp/data
 
   kce_kafka_rest:

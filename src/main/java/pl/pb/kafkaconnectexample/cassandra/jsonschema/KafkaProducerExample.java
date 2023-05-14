@@ -3,6 +3,8 @@ package pl.pb.kafkaconnectexample.cassandra.jsonschema;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import java.util.UUID;
+
 import static pl.pb.kafkaconnectexample.cassandra.config.Commons.println;
 import static pl.pb.kafkaconnectexample.cassandra.jsonschema.KafkaConfig.CASSANDRA_SINK_CLIENT;
 import static pl.pb.kafkaconnectexample.cassandra.jsonschema.KafkaConfig.getProducer;
@@ -15,8 +17,7 @@ public class KafkaProducerExample {
 		// create the producer
 		final KafkaProducer<String, String> producer = getProducer();
 
-		send(CASSANDRA_SINK_CLIENT, producer, "sss", "{\"schema\":{\"type\":\"struct\",\"fields\":[{\"type\":\"int32\",\"optional\":false,\"field\":\"id\"},{\"type\":\"string\",\"optional\":true,\"field\":\"firstname\"},{\"type\":\"string\",\"optional\":true,\"field\":\"lastname\"},{\"type\":\"int32\",\"optional\":true,\"field\":\"phone_number\"}],\"optional\":false,\"name\":\"user\"}," +
-												   "\"payload\":{\"id\":1,\"firstname\":\"Jack\",\"lastname\":\"Sparrow\",\"phone_number\":200200200}},");
+		send("basic_topic", producer, UUID.randomUUID().toString(), "sdasd");
 
 		// flush data - synchronous
 		producer.flush();
