@@ -6,8 +6,7 @@ import static pl.pb.kafkaconnectexample.cassandra.proto.KafkaConfigProperties.ge
 
 public class KafkaConfig {
 
-	public static final String CASSANDRA_SINK_USER_INSERT = "cassandra.connector.sink.user.insert";
-	public static final String CASSANDRA_SINK_USER_UPDATE = "cassandra.connector.sink.user.update";
+	public static final String CASSANDRA_SINK_USER_INSERT = "cassandra_connector_sink_user";
 
 	private KafkaConfig() {
 	}

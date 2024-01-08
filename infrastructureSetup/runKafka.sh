@@ -23,6 +23,50 @@ sleep 3
 echo "\n----------------------------------------------------"
 echo "Create connectors:\n"
 
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
+   "name":"postgres.connector.source",
+   "config":{
+      "topic.prefix":"postgres.connector.source.",
+      "connector.class":"io.confluent.connect.jdbc.JdbcSourceConnector",
+      "tasks.max":"1",
+      "connection.url":"jdbc:postgresql://kce_postgres:5432/postgres",
+      "connection.user":"postgres",
+      "connection.password":"postgres",
+      "mode":"incrementing",
+      "table.whitelist" : "user",
+      "incrementing.column.name":"id"
+   }
+}
+'  | json_pp
+
+
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' \
+-d '{
+      "name": "postgres.connector.sink.client",
+      "config": {
+        "topics": "postgres.connector.sink.client",
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+        "connection.user": "postgres",
+        "connection.password": "postgres",
+        "connection.ds.pool.size": 5,
+        "insert.mode.databaselevel": true,
+        "table.name.format": "client",
+        "auto.create": "false",
+        "auto.evolve": "true",
+        "insert.mode": "insert",
+        "delete.enabled": "false",
+        "schemas.enable": "false",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable": "false",
+        "value.converter.schemas.enable": "true",
+        "fields.whitelist":"id,firstname,lastname,phone_number"
+      }
+    }'  | json_pp
+
+
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '
 {
   "name": "cassandra-basic-sink",
@@ -42,30 +86,6 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
   }
 }
 '  | json_pp
-
-##https://digitalis.io/blog/apache-cassandra/getting-started-with-kafka-cassandra-connector/
-#curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
-#  "name": "cassandraSinkConnector",
-#  "config": {
-#    "connector.class": "io.confluent.connect.cassandra.CassandraSinkConnector",
-#    "tasks.max": "1",
-#    "topics": "user_topic",
-#    "cassandra.contact.points": "kce_cassandra",
-#    "connect.cassandra.port": "9042",
-#    "cassandra.keyspace": "kafka_connect_example2",
-#    "cassandra.write.mode": "Insert",
-#    "cassandra.username": "root",
-#    "cassandra.password": "root",
-#    "cassandra.export.route.query": "INSERT INTO user SELECT * FROM user_topic",
-#
-#    "confluent.topic.replication.factor": 1,
-#    "cassandra.table.manage.enabled": "false",
-#    "cassandra.local.datacenter": "datacenter1",
-#    "confluent.topic.bootstrap.servers": "http://kce_kafka:9092"
-#  }
-#}
-#'  | json_pp
-
 
 sleep 2
 

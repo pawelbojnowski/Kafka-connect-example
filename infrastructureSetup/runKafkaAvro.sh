@@ -9,7 +9,7 @@ for id in $(echo $ids | tr "\n" " "); do
 done
 
 #remove existing docker volumes
-rm -rf ./volumes
+rm -rf ../volumes
 
 #create docker
 docker-compose -f docker-compose-avro.yml up --build -d --remove-orphans
@@ -163,6 +163,28 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "fields.whitelist":"id,firstname,lastname,phone_number"
       }
     }'  | json_pp
+
+
+curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '
+{
+  "name": "cassandra-basic-sink",
+  "config": {
+      "connector.class": "com.datastax.oss.kafka.sink.CassandraSinkConnector",
+      "tasks.max": "1",
+      "topics": "cassandra_connector_sink_user",
+      "contactPoints": "kce_cassandra",
+      "auth.username": "root",
+      "auth.password": "root",
+      "loadBalancing.localDc": "datacenter1",
+      "topic.cassandra_connector_sink_user.kafka_connect_example.client.mapping": "client_id=key, id=value.id, firstname=value.firstname, lastname=value.lastname, phone_number=value.phone_number",
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "io.confluent.connect.avro.AvroConverter",
+      "value.converter.schema.registry.url":"http://kce_schema_registry:8081",
+      "key.converter.schemas.enable": false,
+      "value.converter.schemas.enable": false
+  }
+}
+'  | json_pp
 
 sleep 2
 

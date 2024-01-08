@@ -89,7 +89,6 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: "PLAINTEXT"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT"
       KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://localhost:9091,PLAINTEXT://kce_kafka:9092"
-      #      KAFKA_LISTENERS: "EXTERNAL://localhost:9091,PLAINTEXT://kce_kafka:9092"
       KAFKA_ZOOKEEPER_CONNECT: kce_zookeeper:2181
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
       KAFKA_JMX_PORT: "9997"
@@ -162,7 +161,9 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
-      CONNECT_PLUGIN_PATH: "/etc/kafka-connect/jars"
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components,/etc/kafka-connect/jars"
+                    #      /usr/share/confluent-hub-components <- path to plugin from DOCKER FILE
+                    #      /etc/kafka-connect/jars <- path to plugin from volume
     volumes:
       - ./vol-kafka-connect-jar:/etc/kafka-connect/jars
       - ../volumes/kce/kafka/data:/tmp/data

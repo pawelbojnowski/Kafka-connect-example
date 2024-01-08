@@ -14,7 +14,7 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/db.sql
-      - ./volumesData/postgres-data:/var/lib/postgresql/data
+      - ../volumes/data/postgres-data:/var/lib/postgresql/data
 
   kce_cassandra:
     image: cassandra:latest
@@ -28,12 +28,22 @@ services:
       - "CASSANDRA_PASSWORD=root"
     restart: always
     volumes:
-      - ./volumesData/cassandra_data:/var/lib/cassandra
+      - ../volumes/data/cassandra_data:/var/lib/cassandra
     healthcheck:
       test: [ "CMD", "cqlsh", "-u root", "-p root" ,"-e describe keyspaces" ]
       interval: 10s
       timeout: 10s
       retries: 10
+
+  kce_cassandra_init:
+    container_name: kce_cassandra_init
+    image: cassandra:latest
+    depends_on:
+      kce_cassandra:
+        condition: service_healthy
+    volumes:
+      - ./init.cql:/init.cql
+    command: /bin/bash -c "echo loading kce_cassandra keyspace && cqlsh kce_cassandra -f ./init.cql"
 
   kce_zookeeper:
     container_name: kce_zookeeper
@@ -43,15 +53,18 @@ services:
     links:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
     depends_on:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
     hostname: kce_zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_JMX_PORT: "9998"
     volumes:
-      - ./volumes/zookeeper/data:/var/lib/zookeeper/data
-      - ./volumes/zookeeper/log:/var/lib/zookeeper/log
+      - ../volumes/kce/zookeeper/data:/var/lib/zookeeper/data
+      - ../volumes/kce/zookeeper/log:/var/lib/zookeeper/log
 
   kce_kafka:
     container_name: kce_kafka
@@ -60,13 +73,16 @@ services:
     ports:
       - "9092:29092"
       - "9091:9091"
+      - "9997:9997"
     links:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
     depends_on:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
     environment:
       ADVERTISED_HOST_NAME: "kce_kafka"
@@ -74,9 +90,12 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT"
       KAFKA_ADVERTISED_LISTENERS: "EXTERNAL://localhost:9091,PLAINTEXT://kce_kafka:9092"
       KAFKA_ZOOKEEPER_CONNECT: kce_zookeeper:2181
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"
+      KAFKA_JMX_PORT: "9997"
+      KAFKA_JMX_HOSTNAME: "kce_kafka"
+      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kce_kafka -Dcom.sun.management.jmxremote.rmi.port=9997"
     volumes:
-      - ./volumes/broker/data:/var/lib/kafka/data
+      - ../volumes/kce/broker/data:/var/lib/kafka/data
 
   kce_schema_registry:
     container_name: kce_schema_registry
@@ -86,11 +105,13 @@ services:
     links:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
       - kce_kafka
     depends_on:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
       - kce_kafka
     environment:
@@ -109,12 +130,14 @@ services:
     links:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
       - kce_kafka
       - kce_schema_registry
     depends_on:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
       - kce_kafka
       - kce_schema_registry
@@ -138,8 +161,12 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
       CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
       CONNECT_INTERNAL_VALUE_CONVERTER: "io.confluent.connect.avro.AvroConverter"
+      CONNECT_PLUGIN_PATH: "/usr/share/confluent-hub-components,/etc/kafka-connect/jars"
+      #      /usr/share/confluent-hub-components <- path to plugin from DOCKER FILE
+      #      /etc/kafka-connect/jars <- path to plugin from volume
     volumes:
-      - ./volumes/data:/tmp/data
+      - ./vol-kafka-connect-jar:/etc/kafka-connect/jars
+      - ../volumes/kce/kafka/data:/tmp/data
 
   kce_kafka_rest:
     image: confluentinc/cp-kafka-rest:7.3.3
@@ -148,12 +175,14 @@ services:
     links:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
       - kce_kafka
       - kce_schema_registry
     depends_on:
       - kce_postgres
       - kce_cassandra
+      - kce_cassandra_init
       - kce_zookeeper
       - kce_kafka
       - kce_schema_registry
@@ -166,5 +195,33 @@ services:
       KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
       KAFKA_REST_SCHEMA_REGISTRY_URL: "http://kce_schema_registry:8081"
 
-
+  kce_kafka_ui:
+    container_name: kce_kafka_ui
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - 8080:8080
+    links:
+      - kce_postgres
+      - kce_cassandra
+      - kce_cassandra_init
+      - kce_zookeeper
+      - kce_kafka
+      - kce_schema_registry
+      - kce_kafka_rest
+    depends_on:
+      - kce_postgres
+      - kce_cassandra
+      - kce_cassandra_init
+      - kce_zookeeper
+      - kce_kafka
+      - kce_schema_registry
+      - kce_kafka_rest
+    environment:
+      KAFKA_CLUSTERS_0_NAME: "local"
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kce_kafka:9092"
+      KAFKA_CLUSTERS_0_METRICS_PORT: "9997"
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: "http://kce_schema_registry:8081"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_NAME: "first"
+      KAFKA_CLUSTERS_0_KAFKACONNECT_0_ADDRESS: "http://kce_kafka_connect:8083"
+      DYNAMIC_CONFIG_ENABLED: "false"
 

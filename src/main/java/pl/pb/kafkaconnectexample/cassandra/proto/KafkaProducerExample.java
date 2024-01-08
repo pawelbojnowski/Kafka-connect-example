@@ -1,24 +1,24 @@
-package pl.pb.kafkaconnectexample.cassandra.avro;
+package pl.pb.kafkaconnectexample.cassandra.proto;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import pl.pb.kafkamodel.avro.User;
+import pl.pb.kafkamodel.proto.User;
 
-import static pl.pb.kafkaconnectexample.cassandra.avro.KafkaConfig.CASSANDRA_SINK_USER_UPDATE;
 import static pl.pb.kafkaconnectexample.cassandra.config.Commons.println;
+import static pl.pb.kafkaconnectexample.cassandra.proto.KafkaConfig.CASSANDRA_SINK_USER_INSERT;
 
-public class KafkaProducerUpdateUserExample {
+public class KafkaProducerExample {
 
 
 	public static void main(final String[] args) {
 
 		// create the producer
 		final KafkaProducer<Integer, User> producer = KafkaConfig.<Integer, User>getProducer();
-		send(CASSANDRA_SINK_USER_UPDATE, producer, null, User.newBuilder()
-				.setId(3)
-				.setFirstname("Brian")
-				.setLastname("O’Conner")
-				.setPhoneNumber(333333333)
+		send(CASSANDRA_SINK_USER_INSERT, producer, null, User.newBuilder()
+				.setId(4)
+				.setFirstname("Harry")
+				.setLastname("Potter")
+				.setPhoneNumber(400400400)
 				.build());
 
 		// flush data - synchronous
