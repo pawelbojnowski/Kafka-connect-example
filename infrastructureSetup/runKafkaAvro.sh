@@ -167,7 +167,7 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
 
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '
 {
-  "name": "cassandra-basic-sink",
+  "name": "cassandra_connector_sink_user",
   "config": {
       "connector.class": "com.datastax.oss.kafka.sink.CassandraSinkConnector",
       "tasks.max": "1",

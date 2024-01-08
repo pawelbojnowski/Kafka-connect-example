@@ -47,7 +47,7 @@ services:
 
   kce_zookeeper:
     container_name: kce_zookeeper
-    image: confluentinc/cp-zookeeper:7.3.3
+    image: confluentinc/cp-zookeeper:7.5.3
     ports:
       - "2181:2181"
     links:
@@ -68,7 +68,7 @@ services:
 
   kce_kafka:
     container_name: kce_kafka
-    image: confluentinc/cp-kafka:7.3.3
+    image: confluentinc/cp-kafka:7.5.3
     hostname: kce_kafka
     ports:
       - "9092:29092"
@@ -99,7 +99,7 @@ services:
 
   kce_schema_registry:
     container_name: kce_schema_registry
-    image: confluentinc/cp-schema-registry:7.3.3
+    image: confluentinc/cp-schema-registry:7.5.3
     ports:
       - "8081:8081"
     links:
@@ -124,7 +124,7 @@ services:
   kce_kafka_connect:
     build: ./
     container_name: kce_kafka_connect
-    image: confluentinc/cp-kafka-connect_with_plugin:7.3.3
+    image: confluentinc/cp-kafka-connect_with_plugin:7.5.3
     ports:
       - "8083:8083"
     links:
@@ -169,7 +169,7 @@ services:
       - ../volumes/kce/kafka/data:/tmp/data
 
   kce_kafka_rest:
-    image: confluentinc/cp-kafka-rest:7.3.3
+    image: confluentinc/cp-kafka-rest:7.5.3
     hostname: kce_kafka_rest
     container_name: kce_kafka_rest
     links:
