@@ -35,26 +35,29 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
       "connection.password":"postgres",
       "mode":"incrementing",
       "table.whitelist" : "user",
-      "incrementing.column.name":"id"
+      "incrementing.column.name":"id",
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+      "value.converter.schema.registry.url":"http://kce_schema_registry:8081"
    }
 }
 '  | json_pp
 
 
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
-            "name": "postgres.connector.source.user.query.timestamp",
-            "config": {
-              "topic.prefix": "postgres.connector.source.user.query.timestamp",
-              "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-              "tasks.max": "1",
-              "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
-              "connection.user": "postgres",
-              "connection.password": "postgres",
-              "mode": "timestamp",
-              "query": "SELECT u.* FROM public.user u WHERE u.id > 1",
-              "validate.non.null": "false"
-            }
-          }
+   "name": "postgres.connector.source.user.query.timestamp",
+   "config": {
+     "topic.prefix": "postgres.connector.source.user.query.timestamp",
+     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+     "tasks.max": "1",
+     "connection.url": "jdbc:postgresql://kce_postgres:5432/postgres",
+     "connection.user": "postgres",
+     "connection.password": "postgres",
+     "mode": "timestamp",
+     "query": "SELECT u.* FROM public.user u WHERE u.id > 1",
+     "validate.non.null": "false"
+   }
+}
 '  | json_pp
 
 curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connectors' -d '{
@@ -69,7 +72,10 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
               "mode": "incrementing",
               "query": "Select t.* From (SELECT u.* FROM public.user u WHERE u.id > 1) t",
               "incrementing.column.name": "id",
-              "validate.non.null": "false"
+              "validate.non.null": "false",
+              "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+              "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+              "value.converter.schema.registry.url":"http://kce_schema_registry:8081"
             }
           }
 '  | json_pp
@@ -93,8 +99,11 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "delete.enabled": "false",
         "schemas.enable": "false",
         "key.converter.schemas.enable": "false",
-        "value.converter.schemas.enable": "true",
-        "fields.whitelist":"id,firstname,lastname,phone_number"
+        "value.converter.schemas.enable": "false",
+        "fields.whitelist":"id,firstname,lastname,phone_number",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+        "value.converter.schema.registry.url":"http://kce_schema_registry:8081"
       }
     }'  | json_pp
 
@@ -118,7 +127,10 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "schemas.enable": "false",
         "key.converter.schemas.enable": "false",
         "value.converter.schemas.enable": "true",
-        "fields.whitelist":"id,firstname,lastname,phone_number"
+        "fields.whitelist":"id,firstname,lastname,phone_number",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+        "value.converter.schema.registry.url":"http://kce_schema_registry:8081"
       }
     }'  | json_pp
 
@@ -146,7 +158,10 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
         "pk.mode": "record_value",
         "key.converter.schemas.enable": "false",
         "value.converter.schemas.enable": "true",
-        "fields.whitelist":"id,firstname,lastname,phone_number"
+        "fields.whitelist":"id,firstname,lastname,phone_number",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+        "value.converter.schema.registry.url":"http://kce_schema_registry:8081"
       }
     }'  | json_pp
 
@@ -167,7 +182,10 @@ curl -s -H "Content-Type: application/json" -XPOST 'http://localhost:8083/connec
       "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
       "value.converter.schema.registry.url":"http://kce_schema_registry:8081",
       "key.converter.schemas.enable": false,
-      "value.converter.schemas.enable": true
+      "value.converter.schemas.enable": true,
+      "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+      "value.converter": "io.confluent.connect.protobuf.ProtobufConverter",
+      "value.converter.schema.registry.url":"http://kce_schema_registry:8081"
   }
 }
 '  | json_pp
